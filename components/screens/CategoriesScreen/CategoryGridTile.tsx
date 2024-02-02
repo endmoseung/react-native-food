@@ -4,20 +4,22 @@ import Category from "../../../models/category";
 
 interface CategoryTileProps {
   category: Omit<typeof Category.prototype, "id">;
+  onPress?: () => void;
 }
 
-export default function CategoryGridTile({ category }: CategoryTileProps) {
-  const [isPressed, setIsPressed] = useState(false);
+export default function CategoryGridTile({
+  category,
+  onPress,
+}: CategoryTileProps) {
   return (
     <View style={styles.gridItem}>
       <Pressable
-        onPressIn={() => setIsPressed(true)}
-        onPressOut={() => setIsPressed(false)}
         android_ripple={{ color: "ccc" }}
         style={({ pressed }) => [
           styles.button,
           pressed && styles.buttonPressed,
         ]}
+        onPress={onPress}
       >
         <View
           style={[styles.innerContainer, { backgroundColor: category.color }]}
@@ -31,7 +33,7 @@ export default function CategoryGridTile({ category }: CategoryTileProps) {
 
 const styles = StyleSheet.create({
   gridItem: {
-    // flex: 1,
+    flex: 1,
     margin: 16,
     height: 150,
     elevation: 4,
